@@ -16,7 +16,7 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
-class Reviews(models.Model):
+class Review(models.Model):
     VOTE_TYPE = (
         ('up', 'Up Vote'),
         ('down', 'Down Vote')
