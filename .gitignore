@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 devsearch/projects/migrations/
 devsearch/staticfiles
+devsearch/users/migrations/
