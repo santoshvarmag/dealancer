@@ -29,16 +29,16 @@
            {% for dev in devs %}
             <div class="column card">
             <div class="dev">
-                <a href="/profile.html" class="card__body">
+                <a href="{% url 'dev-profile' dev.id %}" class="card__body">
                 <div class="dev__profile">
                     <img class="avatar avatar--md" src="{{dev.profile_image.url}}" alt="image" />
                     <div class="dev__meta">
                     <h3>{{dev.name}}</h3>
-                    <h5>{{dev.short_intro}}</h5>
+                    <h5>{{dev.short_intro|slice:"60"}}</h5>
                     </div>
                 </div>
                 <p class="dev__info">
-                    {{dev.bio}}
+                    {{dev.bio|slice:"150"}}
                 </p>
                 <div class="dev__skills">
                     <span class="tag tag--pill tag--main">
