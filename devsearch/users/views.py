@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Profile
+from .models import Profile, Skill
 from projects.models import Project
 
 # Create your views here.
@@ -10,6 +10,5 @@ def profiles(request):
 
 def devProfile(request, pk):
     dev = Profile.objects.get(id=pk)
-    projects = Project.objects.filter(owner=dev)
-    context = {'dev':dev, 'projects':projects}
+    context = {'dev':dev,}
     return render(request, 'users/profile.html', context)
