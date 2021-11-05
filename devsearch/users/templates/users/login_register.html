@@ -62,18 +62,13 @@
             <form action="" class="form auth__form" method="POST">
                 {% csrf_token %}
                 {% for field in form %}
+                <div class="form__field">
                     <label for="formInput#text">{{field.label}} </label>
                     {{field}} 
-                    {% comment %} <div class="form__field">
-                        <label for="formInput#text">{{field.label}}</label>
-                        <input
-                        class="input input--text"
-                        id="{{field.auto_id}}"
-                        type="{{field.field.widget.input_type }}"
-                        name="{{field.label}}"
-                        placeholder="{{field.label}}"
-                        />
-                    </div> {% endcomment %}
+                    {% for error in field.errors %}
+                    <p style="color: red;" >{{error}}</p>
+                    {% endfor %}
+                </div> 
                 {% endfor %}
             <div class="auth__actions">
                 <input class="btn btn--sub btn--lg" type="submit" value="Sign Up" />
