@@ -72,7 +72,7 @@
                     <img class="project__thumbnail" src="{{project.featured_image.url}}" alt="project thumbnail" />
                     <div class="card__body">
                       <h3 class="project__title">{{prject.title}}</h3>
-                      <p><a class="project__author" href="profile.html">By {{dev.username}}</a></p>
+                      <p><a class="project__author" href="{% url 'dev-profile' dev.id %}">By {{dev.username}}</a></p>
                       <p class="project--rating">
                         <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
                         Feedback ({{project.votes_total}} Vote{{project.votes_total|pluralize:'s'}})
