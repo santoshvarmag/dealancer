@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path
 from . import views
 
@@ -8,5 +9,6 @@ urlpatterns = [
     path('', views.profiles, name="profiles"),
     path('dev/<str:pk>/', views.devProfile, name='dev-profile' ),
     path('account/', views.userAccount, name="account"),
+    path('edit_account/', views.editAccount, name='edit-account'),
 ]
 
