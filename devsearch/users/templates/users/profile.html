@@ -42,22 +42,22 @@
           <div class="devInfo">
             <h3 class="devInfo__title">Skills</h3>
             <div class="devInfo__skills">
-              {% for skill in dev.skill_set.all%}
-                {% if skill.description %}
+              {% for skill in topSkills%}
                 <div class="devSkill">
                   <h4 class="devSkill__title">{{skill.name}}</h4>
                   <p class="devSkill__info">
                     {{skill.description}}
                   </p>
                 </div>
-                {% else %}
+              {% endfor %}  
+              {% for skill in otherskills %}  
                 <h3 class="devInfo__subtitle">Other Skills</h3>
                 <div class="devInfo__otherSkills">
                   <span class="tag tag--pill tag--sub tag--lg">
                     <small>{{skill.name}}</small>
                   </span>
                 </div>
-                {% endif %}
+                
               {% endfor %}
               
             </div>
