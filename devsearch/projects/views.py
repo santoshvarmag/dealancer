@@ -33,7 +33,7 @@ def createProject(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save() 
-            return redirect ('projects')
+            return redirect ('account')
 
     return render(request, 'projects/project_form.html', {'form':form})
 
@@ -46,7 +46,7 @@ def editProject(request, pk):
         form = ProjectForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('projects')
+            return redirect('account')
 
     return render(request, 'projects/project_form.html', {'form':form})
 
@@ -59,4 +59,4 @@ def deleteProject(request, pk):
         return redirect('projects')
         
     context = {'object':project}
-    return render(request, 'projects/delete.html', context)
+    return render(request, 'delete.html', context)
