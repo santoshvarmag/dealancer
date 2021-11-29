@@ -4,13 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Profile, Skill
+
+from .models import Profile
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .utils import searchProfiles
 
 # Create your views here.
 def profiles(request):
-    devs = Profile.objects.all()
-    context = {'devs':devs}
+    devs, search_query = searchProfiles(request)
+    context = {'devs':devs, 'search_query':search_query}
     return render(request, 'users/profiles.html', context)
 
 def devProfile(request, pk):
