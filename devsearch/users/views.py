@@ -5,14 +5,19 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
+
+
 from .models import Profile
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .utils import searchProfiles
+from .utils import searchProfiles, profilePagination
 
 # Create your views here.
 def profiles(request):
     devs, search_query = searchProfiles(request)
-    context = {'devs':devs, 'search_query':search_query}
+    custom_range, devs = profilePagination(request, devs, 3)
+    
+
+    context = {'devs':devs, 'search_query':search_query, 'custom_range':custom_range}
     return render(request, 'users/profiles.html', context)
 
 def devProfile(request, pk):
