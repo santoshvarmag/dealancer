@@ -13,7 +13,7 @@ def projects(request):
     custom_range, projects = projectsPagination(request, projects, 3)
 
     context = {'projects': projects,
-               'search_query': search_query, 'custom_range': custom_range}
+               'search_query': search_query, 'custom_range': custom_range, 'paginator': paginator}
     return render(request, 'projects/projects.html', context)
 
 

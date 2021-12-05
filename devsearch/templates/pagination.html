@@ -16,7 +16,7 @@
 
         {% if queryset.has_next %}
             <li><a href="?page={{ queryset.next_page_number }}" class="btn">Next &#10095;</a></li>
-            <li><a href="?page={{ queryset.num_pages }}" class="btn">Last &#10219;</a></li>
+            <li><a href="?page={{ queryset.paginator.num_pages }}" class="btn">Last &#10219;</a></li>
         {% endif %}
       </ul>
     </div>
