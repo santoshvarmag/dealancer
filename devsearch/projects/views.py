@@ -1,9 +1,10 @@
 from django.core import paginator
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Project
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from .utils import searchProjects, projectsPagination
 
 # Create your views here.
@@ -19,14 +20,33 @@ def projects(request):
 
 def single_project(request, pk):
     project = Project.objects.get(pk=pk)
+    form = ReviewForm()
+
     project_reviews = project.review_set.all()
     project_tags = project.tags.all()
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        review = form.save(commit=False)
+        review.project = project
+        review.owner = request.user.profile
+        review.save()
+
+        # Update project vote count
+        project.getVoteCount
+
+        messages.success(request, "Your review was successfully submitted!")
+        return redirect('project', pk=project.id)
+        
+        
+
     context = {
         'project':project, 
         'project_reviews': project_reviews,
-        'project_tags':project_tags
+        'project_tags':project_tags,
+        'form': form
         }
-    print(project)
+    
     return render(request, 'projects/single-project.html', context)
 
 @login_required(login_url='login')
