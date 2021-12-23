@@ -1,5 +1,7 @@
 from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .models import Profile
 
@@ -11,6 +13,14 @@ def createProfile(sender, instance, created, **kwargs):
             username=user.username,
             email=user.email,
             name=user.first_name,
+        )
+
+        send_mail(
+            "Welcome to Dev Deal",
+            "We are glad you are here!",
+            settings.EMAIL_HOST_USER,
+            [profile.email],
+            fail_silently=False
         )
 
 
