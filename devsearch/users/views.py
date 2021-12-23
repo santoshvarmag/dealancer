@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 
 
-from .models import Profile
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .models import Profile, Message
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from .utils import searchProfiles, profilePagination
 
 # Create your views here.
@@ -143,3 +143,51 @@ def deleteSkill(request, pk):
 
     context = {'object':skill}
     return render(request, 'delete.html', context)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    messageRequests = profile.messages.all()
+    unreadCount = messageRequests.filter(is_read=False).count()
+
+    context = {'messageRequests': messageRequests, 'unreadCount':unreadCount}
+    return render(request, 'users/inbox.html', context)
+
+
+@login_required(login_url='login')
+def detailMessage(request, pk):
+    profile = request.user.profile
+    messageDetails = profile.messages.get(pk=pk)
+    if messageDetails.is_read == False:
+        messageDetails.is_read = True
+        messageDetails.save()
+    context = {'messageDetails':messageDetails}
+    return render(request, 'users/message.html', context)
+
+
+def sendMessage(request, pk):
+    recipient = Profile.objects.get(id=pk)
+    form = MessageForm()
+    try:
+        sender = request.user.profile
+    except:
+        sender = None
+    
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                message.name = sender.name
+                message.email = sender.email
+            message.save()
+            
+            messages.success(request, "Message has sent successfully!")
+            return redirect('dev-profile', pk=recipient.id)
+
+    context = {'form':form}
+    return render(request, 'users/message_form.html', context)
