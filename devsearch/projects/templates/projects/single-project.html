@@ -62,7 +62,7 @@
               <div class="comment">
                 <a href="{% url 'dev-profile' project.owner.id %}">
                   <img class="avatar avatar--md"
-                    src="{{review.owner.profile_image.url}}" alt="user" />
+                    src="{{review.owner.imageURL}}" alt="user" />
                 </a>
                 <div class="comment__details">
                   <a href="{% url 'dev-profile' review.owner.id %}" class="comment__author">{{review.owner}}</a>
