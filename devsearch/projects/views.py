@@ -74,6 +74,7 @@ def createProject(request):
 def editProject(request, pk):
     profile = request.user.profile
     instance = profile.project_set.get(id=pk)
+    
     form = ProjectForm(instance=instance)
     if request.method == "POST":
         newTags = request.POST.get('newTags').replace(',', ' ').split()
@@ -85,7 +86,7 @@ def editProject(request, pk):
                 project.tags.add(tag)
             return redirect('account')
 
-    return render(request, 'projects/project_form.html', {'form': form})
+    return render(request, 'projects/project_form.html', {'form': form, 'instance':instance})
 
 
 @login_required(login_url='login')
